@@ -1,5 +1,4 @@
 #include "filtros.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,7 +11,7 @@ void cinquenta_tons_de_cinza(image *img){
 	//funcao para maipular os pixels
 	for(i=0;i< img->nlinhas;i++){
 		for(j=0;j<img->ncolunas;j++){
-			img->px[i][j].red=(int)((0.3*img->px[i][j].red)+(0.59*img->px[i][j].green)+(0.11*img->px[i][j].blue));// pega o primeiro pixel e soma com os outros pixels como o arquivo do professor mandou, pra mais informacoes olhe la
+			img->px[i][j].red=(int)((0.3*img->px[i][j].red)+(0.59*img->px[i][j].green)+(0.11*img->px[i][j].blue));// pega o primeiro pixel e soma com os outros pixels
 			img->px[i][j].green=img->px[i][j].red;// adiciona a cor verde a mesma soma feito na cor vermelha
 			img->px[i][j].blue=img->px[i][j].red;// a diciona na cor blue a mesma soma feita na cor vermelha
 
@@ -126,18 +125,19 @@ image *sobel(image *img){
 
 		return novaImg;
 }
-//essa partre ainda esta incompleta, entao disconcidere
+//procedimento de binarização que irá transformar essa imagem em uma imagem binária
 
 image *Binarizacao(image *img,int lim){
 	int i,j;
 	printf("entrada\n");
 
-
+	
 	int nw=lim;
 	image *novo=new_imagem(img->ncolunas,img->nlinhas);
 	for(i=1;i<img->nlinhas-1;i++){
 		for(j=1;j<img->ncolunas-1;j++){
-
+			
+			// caso o valor seja superior a 255 ou inferior a 0, sera atribuido os valores 255 e 0 a eles.
 			if(img->px[i][j].red>nw){
 				novo->px[i][j].red=255;
 				novo->px[i][j].green=255;
