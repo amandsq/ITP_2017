@@ -130,7 +130,7 @@ image *sobel(image *img){
 
 image *Binarizacao(image *img,int lim){
 	int i,j;
-	printf("entrada\n");
+	//printf("entrada\n");
 
 
 	int nw=lim;
@@ -269,8 +269,8 @@ image *Binarizacao(image *img,int lim){
 	return m;
 }*/
 
-MatrixA *hough2(image *img,int rm,int ri,int rx){
-	int r,rmin,rmin_i,rmax;
+MatrixA *hough2(image *img,int rm,int rx){
+	int r,rmin,rmax;
 	int x,y,i,j,t;
 	int a,b;
 
@@ -279,19 +279,16 @@ MatrixA *hough2(image *img,int rm,int ri,int rx){
 	int coluna=img->ncolunas;
 
 int Min=fmin(linha,coluna);
-	rmin=100;
-	rmin_i=Min/10;
-	rmax=220;
+	rmin=rm;
+	rmax=rx;
 
-
-scanf("%d %d",&rmin,&rmax);
 	int max=0;
 
 	double rho;
 	//int hough_h=(int)sqrt(linha*linha+coluna*coluna)+1;
 
 	int theta=360;
-printf("aquivau\n");
+//printf("aquivau\n");
 	int ***A=(int***)calloc(linha,sizeof(int**));
 
 	for(i=0;i<linha;i++){
@@ -302,7 +299,7 @@ printf("aquivau\n");
 	}
 
 
-	printf("affffffff\n");
+//	printf("affffffff\n");
 	for(i=0;i<linha;i++){
 		for(j=0;j<coluna;j++){
 			for(r=rmin;r<rmax;r++){
@@ -311,11 +308,18 @@ printf("aquivau\n");
 		}
 	}
 
+	r=rmax;
+
+	int tlinha=(int)linha/4;
+	int tcoluna=(int)coluna/3;
+
+//	printf("%d %d %d %d\n",linha,coluna,tlinha,tcoluna );
+
 	MatrixA *m=malloc(sizeof(MatrixA));
 
-printf("aqhi\n");
-	for(x=rmin;x<linha-rmax;x++){
-		for(y=rmin;y<coluna-rmax;y++){
+//printf("aqhi\n");
+	for(x=tlinha;x<linha-rmax;x++){
+		for(y=tcoluna;y<coluna-rmax;y++){
 			if(img->px[x][y].red==255){
 				for(r=rmin;r<rmax;r++){
 
@@ -324,33 +328,36 @@ printf("aqhi\n");
 						a=(int)x-r*cos(t*rad);
 						b=(int)y-r*sin(t*rad);
 
-						if(a>0 && b>0 && a<linha && b<coluna){
+						//if(a>0 && b>0 && a<linha && b<coluna){
 							A[a][b][r-rmin]+=1;	
 
 						//	printf("%d %d %d\n",a,b,r-rmin );	
-						}
+						//}
 					}
 				}
 			}
 		}
 	}
-	printf("aqu\n");
+//	printf("aqu\n");
 
 	int valorI=0;
 
-	for(i=rmin;i<linha-rmax;i++){
-		for(j=rmin;j<coluna-rmax;j++){
+	for(i=tlinha;i<linha-rmax;i++){
+		for(j=tcoluna;j<coluna-rmax;j++){
 			for(r=rmin;r<rmax;r++){
 				if(A[i][j][r-rmin]>valorI){
 					valorI=A[i][j][r-rmin];
+					m->X=i;
+					m->Y=j;
+					m->raio=r;
 				}
 			}
 		}
 	}
 
-int ic=0,jc=0,c=0,rt=0;
-	for(i=rmin;i<linha-rmax;i++){
-		for(j=rmin;j<coluna-rmax;j++){
+	int ic=0,jc=0,c=0,rt=0;
+	for(i=tlinha;i<linha-rmax;i++){
+		for(j=tcoluna;j<coluna-rmax;j++){
 			for(r=rmin;r<rmax;r++){
 				if(A[i][j][r-rmin] == valorI){
 					c++;
@@ -375,7 +382,7 @@ int ic=0,jc=0,c=0,rt=0;
 
 	m->raio=(int)rtmax;
 
-	printf("%d %d %d %d\n",m->X,m->Y,m->raio,valorI);
+	//printf("%d %d %d %d\n",m->X,m->Y,m->raio,valorI);
 
 /*
 
@@ -460,7 +467,7 @@ image *pupila(image *img,MatrixA *m){
 	image *pimg=new_imagem(img->ncolunas,img->nlinhas);
 
 	int i,j;
-	printf("aqui\n");
+//	printf("aqui\n");
 
 	for(i=0;i<img->nlinhas;i++){
 		for(j=0;j<img->ncolunas;j++){
@@ -484,14 +491,14 @@ image *pupila(image *img,MatrixA *m){
 void maca_pupila(image *img,MatrixA *m){
 	unsigned int t;
 	int xp,yp;
-	printf("ops\n");
+//	printf("ops\n");
 
 	for(t=0;t<360;t++){
 		yp=m->raio*cos(t*(3.14/180.0));
 		xp=m->raio*sin(t*(3.14/180.0));
 
-		img->px[m->X+xp][m->Y+yp].red=255;
-		img->px[m->X+xp][m->Y+yp].green=0;
+		img->px[m->X+xp][m->Y+yp].red=0;
+		img->px[m->X+xp][m->Y+yp].green=255;
 		img->px[m->X+xp][m->Y+yp].blue=0;
 	}
 }

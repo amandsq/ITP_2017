@@ -12,7 +12,7 @@ void Destroi(image *img){
 image *new_imagem(int coluna,int linhas){
 	int i;
 
-	printf("passa da qui\n");
+//	printf("passa da qui\n");
 	image *img=(image*)calloc(1,sizeof(image));
 	img->px=(pixel**)calloc(linhas,sizeof(pixel*));
 
@@ -20,12 +20,12 @@ image *new_imagem(int coluna,int linhas){
 		img->px[i]=(pixel*)calloc(coluna,sizeof(pixel));
 	}
 
-	printf("passa da qui tbm\n");
+//	printf("passa da qui tbm\n");
 
 	img->ncolunas=coluna;
 	img->nlinhas=linhas;
 
-	printf("ops\n");
+//	printf("ops\n");
 	return img;
 }
 //ler uma imagem dada pelo usuario
@@ -121,5 +121,45 @@ pixel *ler_pixel(image *img,int coluna,int linha){
 	}
 
 	return &img->px[linha][coluna];
+}
+
+void Diagnostico(image *img,MatrixA *m,char *Diag){
+	
+	FILE *dg;
+
+	dg=fopen(Diag,"w");
+
+	int threshold=90;
+	int i,j;
+	double medPixel;
+	int contPixel=0,pxCatarata=0;
+
+	for(i=0;i<img->nlinhas;i++){
+		for(j=0;j<img->ncolunas;j++){
+			int d=(int)sqrt(pow(i-m->X,2)+pow(j-m->Y,2));
+
+			if(d<=m->raio-5){
+				medPixel=(img->px[i][j].red+img->px[i][j].green+img->px[i][j].blue)/3;
+
+				contPixel++;
+				if(medPixel>threshold){
+					pxCatarata++;
+				}
+			}
+		}
+	}
+
+	double porcentagem=pxCatarata*100/contPixel;
+
+	if(porcentagem<60){
+		fprintf(dg, "Diaginostico final: Sem catarata\n");
+	}else{
+		fprintf(dg, "Diaginostico final: Com catarata\n");
+	}
+
+	fprintf(dg, "porcentagem de comprometimento: %.2lf%c\n",porcentagem,'%');
+
+	fclose(dg);
+
 }
 
