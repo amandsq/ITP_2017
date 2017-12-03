@@ -32,9 +32,9 @@ int main(int argc, char *argv[])
 
 
 	if(strcmp(Arquivo,"Normal.ppm")==0){
-		lim=15;
-		rmin=12;
-		rmax=3;
+		lim=20;
+		rmin=150;
+		rmax=160;
 	}else if(strcmp(Arquivo,"Normal2.ppm")==0){
 		lim=40;
 		rmin=90;
@@ -42,9 +42,9 @@ int main(int argc, char *argv[])
 	}
 
 	else if(strcmp(Arquivo,"Catarata.ppm")==0){
-		lim=78;
-		rmin=20;
-		rmax=4;
+		lim=30;
+		rmin=70;
+		rmax=78;
 	}
 
 	else if(strcmp(Arquivo,"Catarata2.ppm")==0){
@@ -69,7 +69,8 @@ int main(int argc, char *argv[])
 	sob=sobel(gaus);
 
 	//salva_ascii(sob);
-
+	//printf("Digite o limiar, o rmin e rmax\n");
+//	scanf("%d %d %d",&lim,&rmin,&rmax);
 //	printf("aff\n");
 	thod=Binarizacao(sob,lim);
 //	printf("cu\n");
@@ -86,8 +87,8 @@ int main(int argc, char *argv[])
 
 	Diagnostico(seg,m,dest);
 	printf("processamento concluido.\n");
-//	salva_ascii(seg);
-	//salva_ascii(img);
+	//salva_ascii(seg);
+//	salva_ascii(img);
 	free(img);
 	free(gaus);
 	free(sob);
