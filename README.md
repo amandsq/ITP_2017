@@ -5,11 +5,11 @@ alunos envolvidos:
 ------------
 - Amanda Freire de Albuquerque
 
-	\* responsavel pela leitura das imagens, transformação em tons de cinza, binarização e diagnostico;
+	\* responsavel pela leitura das imagens, transformação em tons de cinza, aplicacao do filtro gaussiano, binarização e diagnostico;
 	
 - Lucas Lima Marques de Oliveira
 
-	\* responsavel pela aplicação do filtro gaussiano, filtro de sobel, transformada de hough e segmentação da pupila;
+	\* responsavel pelo filtro de sobel, transformada de hough, segmentação da pupila e criação das imagens ja com os filtros;
 	
 O que foi feito:
 --------------
