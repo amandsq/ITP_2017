@@ -31,4 +31,5 @@ void salva_ascii(image *img);
 
 pixel *ler_pixel(image *img,int coluna,int linha);
 
+void Diagnostico(image *img,MatrixA *m,char *Diag);
 #endif
