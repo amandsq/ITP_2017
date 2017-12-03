@@ -15,7 +15,7 @@ image *Binarizacao(image *img,int lim);
 
 //MatrixA *hough(image *img,int rmin,int rmin_i,int rmax);
 
-MatrixA *hough2(image *img,int rm,int ri,int rx);
+MatrixA *hough2(image *img,int rm,int rx);
 
 image *pupila(image *img,MatrixA *m);
 
