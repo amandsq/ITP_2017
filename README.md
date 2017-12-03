@@ -4,13 +4,18 @@ Trabalho de conclusão do semestre das disciplinas de ITP e PTP
 alunos envolvidos:
 ------------
 - Amanda Freire de Albuquerque
+
+	\* responsavel pela leitura das imagens, transformação em tons de cinza, binarização e diagnostico;
+	
 - Lucas Lima Marques de Oliveira
 
+	\* responsavel pela aplicação do filtro gaussiano, filtro de sobel, transformada de hough e segmentação da pupila;
+	
 O que foi feito:
 --------------
 
 	- Leitura da imagem em formato PPM;
-	-	Transformar a imagem colorida para tons de cinza;
+	- Transformar a imagem colorida para tons de cinza;
 	- Aplicação do filtro gaussiano;
 	- Aplicação do filtro de sobel;
 	- Binarização;
@@ -26,4 +31,8 @@ O que seria feito diferente
 ------------------------
 
 
-
+Como compilar:
+------------
+   abra ao gcc no terminal e depois execute os seguintes comandos
+   - make
+   - ./Catarata -i <nome da imagem> -f ppm -o Diagnostico.txt
