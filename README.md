@@ -35,4 +35,4 @@ Como compilar:
 ------------
    abra ao gcc no terminal e depois execute os seguintes comandos
    - make
-   - ./Catarata -i <nome da imagem> -f ppm -o Diagnostico.txt
+   - ./Catarata -i \<nome da imagem> -f ppm -o Diagnostico.txt
