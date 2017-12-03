@@ -274,7 +274,7 @@ int Min=fmin(linha,coluna);
 
 	return m;
 }
-
+// cria uma imagem som com a pupila
 image *pupila(image *img,MatrixA *m){
 	image *pimg=new_imagem(img->ncolunas,img->nlinhas);
 
@@ -284,7 +284,7 @@ image *pupila(image *img,MatrixA *m){
 	for(i=0;i<img->nlinhas;i++){
 		for(j=0;j<img->ncolunas;j++){
 			int d=(int)sqrt(pow(i-m->X,2)+pow(j-m->Y,2));
-
+			//caso nao esteja no raio da pupila, a imagem fica preta
 			if(d<= m->raio-5){
 				pimg->px[i][j].red=img->px[i][j].red;
 				pimg->px[i][j].green=img->px[i][j].green;
@@ -299,7 +299,7 @@ image *pupila(image *img,MatrixA *m){
 
 	return pimg;
 } 
-
+// coloca marcacao na pupila
 void maca_pupila(image *img,MatrixA *m){
 	unsigned int t;
 	int xp,yp;
