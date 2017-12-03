@@ -12,7 +12,7 @@ void Destroi(image *img){
 image *new_imagem(int coluna,int linhas){
 	int i;
 
-	printf("passa da qui\n");
+
 	image *img=(image*)calloc(1,sizeof(image));
 	img->px=(pixel**)calloc(linhas,sizeof(pixel*));
 
@@ -20,12 +20,12 @@ image *new_imagem(int coluna,int linhas){
 		img->px[i]=(pixel*)calloc(coluna,sizeof(pixel));
 	}
 
-	printf("passa da qui tbm\n");
+
 
 	img->ncolunas=coluna;
 	img->nlinhas=linhas;
 
-	printf("ops\n");
+
 	return img;
 }
 //ler uma imagem dada pelo usuario
@@ -79,7 +79,7 @@ void salva_ascii(image *img){
 	printf("Digite o nome do arquivo destino\n");
 	scanf("%s",nome_arq);
 
-	strcat(nome_arq,".ppm");// cocatena o ".ppm" ao fim do nome do arquivo dado pelo usuario
+	strcat(nome_arq,".ppm");// coloca o ".ppm" ao fim do nome do arquivo dado pelo usuario
 	ft=fopen(nome_arq,"w");// //isso é responsavel por criar o arquivo com o nome dado pelo usuario, por isso o "w"
 
 	/*for(i=0;i<8;i++){
@@ -91,10 +91,10 @@ void salva_ascii(image *img){
 	}*/
 	fprintf(ft, "P3\n");//passa o codigo do tipo ppm para o arquivo
 	fprintf(ft, "%d\n",img->ncolunas);//passa o numero de colunas para o arquivo
-	fprintf(ft, "%d\n",img->nlinhas);//passa o numero de linhas para o arquvoo 
+	fprintf(ft, "%d\n",img->nlinhas);//passa o numero de linhas para o arquivo 
 	fprintf(ft, "%d\n",255);//passa o numero maximo de cada pixel 
 	
-	// passa a marix com os pixel do arquivo
+	// passa a matrix com os pixel do arquivo
 	for(i=0;i<img->nlinhas;i++){
 		for(j=0;j<img->ncolunas;j++){
 			fprintf(ft, "%d ",img->px[i][j].red);
@@ -123,3 +123,42 @@ pixel *ler_pixel(image *img,int coluna,int linha){
 	return &img->px[linha][coluna];
 }
 
+void Diagnostico(image *img,MatrixA *m,char *Diag){
+	
+	FILE *dg;
+
+	dg=fopen(Diag,"w"); //Abrir um arquivo texto para gravação
+
+	int threshold=90; //Definindo limiar pra saber se o pixel é ou nao catarata
+	int i,j;
+	double medPixel;
+	int contPixel=0,pxCatarata=0;
+
+	for(i=0;i<img->nlinhas;i++){
+		for(j=0;j<img->ncolunas;j++){
+			int d=(int)sqrt(pow(i-m->X,2)+pow(j-m->Y,2));
+
+			if(d<=m->raio-5){
+				medPixel=(img->px[i][j].red+img->px[i][j].green+img->px[i][j].blue)/3; //calcula a media das cores (vermelho, verde e azul) de cada pixel
+
+				contPixel++;
+				if(medPixel>threshold){ //compara a media com o limiar e se for maior eh considerado catarata
+					pxCatarata++;
+				}
+			}
+		}
+	}
+
+	double porcentagem=pxCatarata*100/contPixel; //calculo da porcentagem da catarata
+
+	if(porcentagem<60){
+		fprintf(dg, "Diaginostico final: Sem catarata\n");
+	}else{
+		fprintf(dg, "Diaginostico final: Com catarata\n");
+	}
+
+	fprintf(dg, "porcentagem de comprometimento: %.2lf%c\n",porcentagem,'%');
+
+	fclose(dg);
+
+}
