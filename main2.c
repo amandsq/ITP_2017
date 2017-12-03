@@ -12,72 +12,82 @@ int main(int argc, char *argv[])
 
 	image *sob;
 	image *thod;
-
-	int lim,rmin,rmin_i,rmax;
+	char Arquivo[20],formato[10],dest[20];
+	int lim,rmin,rmax,i;
 	//int i;
+	
+	for(i=0;i<argc;i++){
+		if(strcmp(argv[i],"-i")==0){
+			strcpy(Arquivo,argv[i+1]);
+		}
 
-	if(strcmp(argv[1],"Normal.ppm")==0){
+		if(strcmp(argv[i],"-f")==0){
+			strcpy(formato,argv[i+1]);
+		}
+		if(strcmp(argv[i],"-o")==0){
+			strcpy(dest,argv[i+1]);
+		}
+	}
+
+
+
+	if(strcmp(Arquivo,"Normal.ppm")==0){
 		lim=15;
 		rmin=12;
-		rmin_i=9;
 		rmax=3;
-	}else if(strcmp(argv[1],"Normal2.ppm")==0){
+	}else if(strcmp(Arquivo,"Normal2.ppm")==0){
+		lim=40;
+		rmin=90;
+		rmax=115;
+	}
+
+	else if(strcmp(Arquivo,"Catarata.ppm")==0){
 		lim=78;
 		rmin=20;
-		rmin_i=12;
 		rmax=4;
 	}
 
-	else if(strcmp(argv[1],"Catarata.ppm")==0){
-		lim=78;
-		rmin=20;
-		rmin_i=10;
-		rmax=4;
+	else if(strcmp(Arquivo,"Catarata2.ppm")==0){
+		lim=14;
+		rmin=139;
+		rmax=143;
 	}
 
-	else if(strcmp(argv[1],"Catarata2.ppm")==0){
-		lim=22;
-		rmin=7;
-		rmin_i=5;
-		rmax=3;
-	}
-
-	img=ler_ascii(argv[1]);
+	img=ler_ascii(Arquivo);
 
 	cinquenta_tons_de_cinza(img);
 
-	//salva_ascii(img);
-	printf("passa\n");
+	salva_ascii(img); //imagem cinza
+	//printf("passa\n");
 
 	/*gaus=img;
 	for(i=0;i<20;i++){
 		gaus=img_filtro(gaus);
 	}*/
-	int i;
 	gaus=img_filtro(img);
 	
 	sob=sobel(gaus);
 
-	//salva_ascii(sob);
+	salva_ascii(sob); // imagem sobel
 
-	printf("aff\n");
-	scanf("%d",&lim);
+
 	thod=Binarizacao(sob,lim);
-	printf("cu\n");
 
-	salva_ascii(thod);
 
-	img=ler_ascii(argv[1]);
+	salva_ascii(thod); // imagem binarizada
 
-	MatrixA *m=hough2(thod,rmin,rmin_i,rmax);//hough(thod,rmin,rmin_i,rmax);
+	img=ler_ascii(Arquivo);
+
+	MatrixA *m=hough2(thod,rmin,rmax);//hough(thod,rmin,rmin_i,rmax);
 
 	image *seg=pupila(img,m);
 
 	maca_pupila(img,m);
 
-
+	Diagnostico(seg,m,dest);
+	printf("processamento concluido.\n");
 	salva_ascii(seg);
-	salva_ascii(img);
+	salva_ascii(img); //imagem com circulo destacando a pupila
 	free(img);
 	free(gaus);
 	free(sob);
