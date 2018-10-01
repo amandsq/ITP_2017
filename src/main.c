@@ -1,5 +1,5 @@
-#include "processamento.h"
-#include "filtros.h"
+#include "../include/processamento.h"
+#include "../include/filtros.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -14,7 +14,6 @@ int main(int argc, char *argv[])
 	image *thod;
 	char Arquivo[20],formato[10],dest[20];
 	int lim,rmin,rmax,i;
-	//int i;
 	
 	for(i=0;i<argc;i++){
 		if(strcmp(argv[i],"-i")==0){
