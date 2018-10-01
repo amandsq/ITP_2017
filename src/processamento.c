@@ -1,4 +1,4 @@
-#include "processamento.h"
+#include "../include/processamento.h"
 //funcao criar uma nova imagem com os pixels com o valor 0 0 0
 #include <stdio.h>
 #include <stdlib.h>

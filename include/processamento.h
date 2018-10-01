@@ -1,7 +1,6 @@
 #ifndef PROCESSAMENTO_H
 #define PROCESSAMENTO_H
 
-
 typedef struct 
 {
 	int red;
